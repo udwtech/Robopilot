@@ -1,16 +1,20 @@
 
 mod play;
 mod record;
+use std::{io::Error, path::Path};
+
+use chrono::{Date, DateTime, Local};
 
 use clap::{App, Arg};
-use enigo::*;
-use process_list::for_each_process;
-use std::{
-    path::Path,
-    process::{self, Command},
-};
+
 
 fn main() {
+
+    let now = Local::now();
+
+    print!("{:?}",now);
+
+    // std::process::exit(0);
 
     let default_outdir = std::env::current_dir().unwrap().join("recordings");
 
@@ -53,8 +57,10 @@ fn main() {
 
 fn initialize_engine(matches: &clap::ArgMatches) {
     let status = matches.value_of("status").expect("No Status Value");
-    let outdir = matches.value_of("outdir");
+    let outdir = matches.value_of("outdir").unwrap();
     let record_file = matches.value_of("recordFile");
+
+    let outdir_path = Path::new(outdir);
 
     if status == "play" || status == "p" {
         play::action(record_file.unwrap());
@@ -62,7 +68,8 @@ fn initialize_engine(matches: &clap::ArgMatches) {
 
     if status == "record" || status == "r"{
         println!("Start Recording");
-        record::action(outdir.unwrap());
+        record::action(outdir_path);
     }
+
 }
 
