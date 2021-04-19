@@ -1,15 +1,12 @@
 mod mouse_record;
-
 mod keyboard_record;
 mod record_db;
 
 use std::path::Path;
-
 use device_query::{DeviceQuery, DeviceState, Keycode};
 use mouse_record::MouseRecord;
 use keyboard_record::KeyboardRecord;
-
-use self::record_db::RecordDb;
+use record_db::RecordDb;
 
 pub fn action(outdir: &Path) {
     let device_state = DeviceState::new();

@@ -1,4 +1,3 @@
-
 mod play;
 mod record;
 use std::{io::Error, path::Path};
@@ -7,12 +6,10 @@ use chrono::{Date, DateTime, Local};
 
 use clap::{App, Arg};
 
-
 fn main() {
-
     let now = Local::now();
 
-    print!("{:?}",now);
+    print!("{:?}", now);
 
     // std::process::exit(0);
 
@@ -43,10 +40,10 @@ fn main() {
         )
         .arg(
             Arg::with_name("recordFile")
-            .short("f")
-            .help("Define the record file")
-            .required_ifs(&[("status","p"),("status","play")])
-            .takes_value(true),
+                .short("f")
+                .help("Define the record file")
+                .required_ifs(&[("status", "p"), ("status", "play")])
+                .takes_value(true),
         )
         .get_matches();
 
@@ -66,10 +63,8 @@ fn initialize_engine(matches: &clap::ArgMatches) {
         play::action(record_file.unwrap());
     }
 
-    if status == "record" || status == "r"{
+    if status == "record" || status == "r" {
         println!("Start Recording");
         record::action(outdir_path);
     }
-
 }
-
