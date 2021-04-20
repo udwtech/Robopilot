@@ -1,12 +1,14 @@
-mod keyboard_record;
-mod mouse_record;
-mod record_db;
+mod keyboard;
+mod mouse;
+
 
 use device_query::{DeviceQuery, DeviceState, Keycode};
-use keyboard_record::KeyboardRecord;
-use mouse_record::MouseRecord;
-use record_db::{RecordDb, Recording};
+use keyboard::KeyboardRecord;
+use mouse::MouseRecord;
 use std::path::Path;
+use crate::db::Recording;
+
+use crate::db::RecordDb;
 
 pub fn action(outdir: &Path) {
     let device_state = DeviceState::new();
@@ -32,8 +34,6 @@ pub fn action(outdir: &Path) {
 
             db.add(data_record);
 
-            db.save_all();
-
             continue;
         }
 
@@ -41,11 +41,33 @@ pub fn action(outdir: &Path) {
             && keyboard.contains(&Keycode::R)
             && keyboard.contains(&Keycode::K)
         {
-            KeyboardRecord::new(&device_state);
+            let data = KeyboardRecord::new(&device_state);
+
+            match data {
+                Some(data) => {
+                    let keypress:Vec<String> = data.key_pressed
+                    .iter()
+                    .map(|x| x.to_string()).collect();
+
+                    let data_record = Recording {
+                        device: data.device,
+                        x: None,
+                        y: None,
+                        button_pressed: None,
+                        key_pressed: Some(keypress),
+                    };
+
+                    db.add(data_record);
+                }
+                None => {}
+            }
+
             continue;
         }
 
         if keyboard.contains(&Keycode::Escape) {
+            println!("Saving Recoreded Data");
+            db.save_all();
             return;
         }
     }

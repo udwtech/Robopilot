@@ -7,34 +7,57 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'AutoPilot'",
+            "name": "Debug Play 'autopilot'",
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=AutoPilot",
-                    "--package=AutoPilot"
+                    "--bin=autopilot",
+                    "--package=autopilot"
                 ],
                 "filter": {
-                    "name": "AutoPilot",
+                    "name": "autopilot",
                     "kind": "bin"
                 }
             },
-            "args": ["-s=record"],
+            "args": [
+                "-s=play",
+                "-f=C:\\PersonalRepo\\brave_auto_earn\\recordings\\recording_2.toml"
+            ],
             "cwd": "${workspaceFolder}"
         },
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in executable 'AutoPilot'",
+            "name": "Debug Record 'autopilot'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=autopilot",
+                    "--package=autopilot"
+                ],
+                "filter": {
+                    "name": "autopilot",
+                    "kind": "bin"
+                }
+            },
+            "args": [
+                "-s=record",
+            ],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'autopilot'",
             "cargo": {
                 "args": [
                     "test",
                     "--no-run",
-                    "--bin=AutoPilot",
-                    "--package=AutoPilot"
+                    "--bin=autopilot",
+                    "--package=autopilot"
                 ],
                 "filter": {
-                    "name": "AutoPilot",
+                    "name": "autopilot",
                     "kind": "bin"
                 }
             },
