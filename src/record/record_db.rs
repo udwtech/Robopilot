@@ -1,12 +1,17 @@
 use chrono::Local;
 use serde::{Deserialize, Serialize};
-use std::{fs::{self, File}, io::Error, ops::Add, path::{Path, PathBuf}};
+use std::{
+    fs::{self, File},
+    io::Error,
+    ops::Add,
+    path::{Path, PathBuf},
+};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct RecordDb {
     pub created_at: i64,
     pub recordings: Vec<Recording>,
-    #[serde(skip,default)]
+    #[serde(skip, default)]
     file: PathBuf,
 }
 
@@ -22,13 +27,16 @@ pub struct Recording {
 impl RecordDb {
     pub fn read_db(file_path: &Path) {}
 
-    pub fn load_db(file_path: &Path){}
+    pub fn load_db(file_path: &Path) {}
 
-    pub fn add(&self, record: Recording) {}
+    pub fn add(&mut self, record: Recording) {
+        self.recordings.push(record);
+    }
 
-    // Save the recording to the 
-    pub fn save_all(&self){
-
+    // Save the recording to the
+    pub fn save_all(&self) {
+        let file_copy = self.file.clone();
+        fs::write(file_copy, toml::to_string(&self).unwrap());
     }
 
     pub fn delete(&self, record: Recording) {}

@@ -1,18 +1,17 @@
-mod mouse_record;
 mod keyboard_record;
+mod mouse_record;
 mod record_db;
 
-use std::path::Path;
 use device_query::{DeviceQuery, DeviceState, Keycode};
-use mouse_record::MouseRecord;
 use keyboard_record::KeyboardRecord;
-use record_db::RecordDb;
+use mouse_record::MouseRecord;
+use record_db::{RecordDb, Recording};
+use std::path::Path;
 
 pub fn action(outdir: &Path) {
     let device_state = DeviceState::new();
 
-    let db = RecordDb::new(outdir,None)
-    .expect("Fail Create File");
+    let mut db = RecordDb::new(outdir, None).expect("Fail Create File");
 
     loop {
         let keyboard = device_state.get_keys();
@@ -22,6 +21,19 @@ pub fn action(outdir: &Path) {
             && keyboard.contains(&Keycode::M)
         {
             let data = MouseRecord::new(&device_state);
+            let data_record = Recording {
+                device: data.device,
+                x: data.x,
+                y: data.y,
+                button_pressed: data.button_pressed,
+                key_pressed: None,
+            };
+            println!("Mouse record Data {:#?}", &data_record);
+
+            db.add(data_record);
+
+            db.save_all();
+
             continue;
         }
 

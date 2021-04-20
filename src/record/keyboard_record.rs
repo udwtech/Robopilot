@@ -1,5 +1,6 @@
 use device_query::{DeviceState, Keycode, DeviceQuery};
 
+#[derive(Debug)]
 pub struct KeyboardRecord {
     pub device:String,
     pub key_pressed: Vec<Keycode>,

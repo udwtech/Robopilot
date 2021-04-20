@@ -1,5 +1,6 @@
 use device_query::{DeviceState, Keycode, DeviceQuery};
 
+#[derive(Debug)]
 pub struct MouseRecord {
     pub device:String,
     pub x: Option<i32>,
@@ -49,7 +50,7 @@ impl MouseRecord {
                 }
             }
     
-            if keyboard.contains(&Keycode::Escape) {
+            if keyboard.contains(&Keycode::F12) {
                 println!("No recording on mouse position or clicks");
                 return MouseRecord {
                     device: String::from("mouse"),
