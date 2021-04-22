@@ -15,6 +15,8 @@ const SHORT_OUT_DIR: &str = "o";
 const RECORD_FILE: &str = "record_file";
 const SHORT_RECORD_FILE: &str = "f";
 
+/*
+*/
 fn main() {
     let now = Local::now();
 
