@@ -1,5 +1,5 @@
 [package]
-name = "rotopilot"
+name = "robopilot"
 version = "0.2.0"
 description = "Mouse and Keyboard record and replay application"
 keywords = ["mouse", "keyboard", "automated"]
