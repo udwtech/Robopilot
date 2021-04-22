@@ -2,7 +2,7 @@ use chrono::Local;
 use serde::{Deserialize, Serialize};
 use std::{
     fs::{self, File},
-    io::Error,
+    io::{Error, Read},
     ops::Add,
     path::{Path, PathBuf},
 };
@@ -25,9 +25,28 @@ pub struct Recording {
 }
 
 impl RecordDb {
-    pub fn read_db(file_path: &Path) {}
 
-    pub fn load_db(file_path: &Path) {}
+    
+    pub fn load_db(file_path: &Path) -> RecordDb {
+        let mut option = fs::OpenOptions::new();
+
+        let mut file = option
+            .read(true)
+            .open(file_path)
+            .expect("Unable to open the file");
+
+        let mut content: String = String::new();
+        let _size = file
+            .read_to_string(&mut content)
+            .expect("Unable to load file");
+
+        let db: RecordDb = toml::from_str(&content).expect(
+            "
+            Content of the file is not as expected",
+        );
+
+        return db
+    }
 
     pub fn add(&mut self, record: Recording) {
         self.recordings.push(record);
@@ -36,7 +55,10 @@ impl RecordDb {
     // Save the recording to the
     pub fn save_all(&self) {
         let file_copy = self.file.clone();
-        fs::write(file_copy, toml::to_string(&self).unwrap());
+
+        let content = toml::to_string(&self).expect("Fail to serialize data");
+
+        fs::write(file_copy, content).expect("Fail to save recording");
     }
 
     pub fn delete(&self, record: Recording) {}

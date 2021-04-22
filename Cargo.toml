@@ -1,8 +1,8 @@
 [package]
-name = "AutoPilot"
+name = "autopilot"
 version = "0.1.0"
 description = "Mouse and Keyboard record and replay application"
-keywords = ["mouse","keyboard","automated"]
+keywords = ["mouse", "keyboard", "automated"]
 authors = ["Darwin Subramaniam <darwin.subramaniam@keysight.com>"]
 edition = "2018"
 

@@ -1,10 +1,19 @@
+mod db;
 mod play;
 mod record;
-use std::{io::Error, path::Path};
-
-use chrono::{Date, DateTime, Local};
-
+use chrono::Local;
 use clap::{App, Arg};
+use std::path::Path;
+
+/// CONSTANTS
+const STATUS: &str = "status";
+const SHORT_STATUS: &str = "s";
+
+const OUT_DIR: &str = "outdir";
+const SHORT_OUT_DIR: &str = "o";
+
+const RECORD_FILE: &str = "record_file";
+const SHORT_RECORD_FILE: &str = "f";
 
 fn main() {
     let now = Local::now();
@@ -22,8 +31,9 @@ fn main() {
         .author("darwin subramaniam")
         .about("Records and replay mouse and keyboard actions")
         .arg(
-            Arg::with_name("status")
-                .short("s")
+            Arg::with_name(STATUS)
+                .short(SHORT_STATUS)
+                .default_value("record")
                 .value_name("status")
                 .display_order(0)
                 .possible_values(&["record", "r", "play", "p"])
@@ -32,36 +42,38 @@ fn main() {
                 .required(true),
         )
         .arg(
-            Arg::with_name("outdir")
+            Arg::with_name(OUT_DIR)
                 .default_value(default_outdir.to_str().unwrap())
-                .short("o")
+                .short(SHORT_OUT_DIR)
                 .help("Path of directory to store the recording")
                 .takes_value(true),
         )
         .arg(
-            Arg::with_name("recordFile")
-                .short("f")
+            Arg::with_name(RECORD_FILE)
+                .short(SHORT_RECORD_FILE)
                 .help("Define the record file")
-                .required_ifs(&[("status", "p"), ("status", "play")])
+                .required_ifs(&[(SHORT_STATUS, "p"), (STATUS, "play")])
                 .takes_value(true),
         )
         .get_matches();
 
     initialize_engine(&matches);
 
-
     std::process::exit(0);
 }
 
 fn initialize_engine(matches: &clap::ArgMatches) {
-    let status = matches.value_of("status").expect("No Status Value");
-    let outdir = matches.value_of("outdir").unwrap();
-    let record_file = matches.value_of("recordFile");
+    let status = matches.value_of(STATUS).expect("No Status Value");
+    let outdir = matches.value_of(OUT_DIR).unwrap();
 
     let outdir_path = Path::new(outdir);
 
     if status == "play" || status == "p" {
-        play::action(record_file.unwrap());
+        let file_path = matches.value_of(RECORD_FILE).expect("Wrong file path");
+
+        let file_path = Path::new(file_path);
+
+        play::action(file_path);
     }
 
     if status == "record" || status == "r" {
