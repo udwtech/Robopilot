@@ -1,10 +1,12 @@
 [package]
-name = "autopilot"
+name = "rotopilot"
 version = "0.1.0"
 description = "Mouse and Keyboard record and replay application"
 keywords = ["mouse", "keyboard", "automated"]
-authors = ["Darwin Subramaniam <darwin.subramaniam@keysight.com>"]
+authors = ["Darwin Subramaniam <darwinsubramaniam@gmail.com>"]
+license = "MIT"
 edition = "2018"
+repository = "https://github.com/udwtech/Robopilot"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

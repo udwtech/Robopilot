@@ -27,19 +27,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cdb031dd78e28731d87d56cc8ffef4a8f36ca26c38fe2de700543e627f8a464a"
 
 [[package]]
-name = "autopilot"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "clap",
- "device_query",
- "enigo",
- "process_list",
- "serde",
- "toml",
-]
-
-[[package]]
 name = "bitflags"
 version = "1.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -246,6 +233,19 @@ name = "readmouse"
 version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "be105c72a1e6a5a1198acee3d5b506a15676b74a02ecd78060042a447f408d94"
+
+[[package]]
+name = "rotopilot"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "clap",
+ "device_query",
+ "enigo",
+ "process_list",
+ "serde",
+ "toml",
+]
 
 [[package]]
 name = "serde"
