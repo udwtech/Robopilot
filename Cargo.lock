@@ -236,7 +236,7 @@ checksum = "be105c72a1e6a5a1198acee3d5b506a15676b74a02ecd78060042a447f408d94"
 
 [[package]]
 name = "robopilot"
-version = "0.2.1"
+version = "0.3.1"
 dependencies = [
  "chrono",
  "clap",
