@@ -1,5 +1,8 @@
 use device_query::{DeviceState, Keycode, DeviceQuery};
 
+/*
+
+*/
 #[derive(Debug)]
 pub struct KeyboardRecord {
     pub device:String,
@@ -35,3 +38,4 @@ impl KeyboardRecord {
         }
     }
 }
+
