@@ -15,14 +15,10 @@ const SHORT_OUT_DIR: &str = "o";
 const RECORD_FILE: &str = "record_file";
 const SHORT_RECORD_FILE: &str = "f";
 
-/*
-*/
 fn main() {
     let now = Local::now();
 
     print!("{:?}", now);
-
-    // std::process::exit(0);
 
     let default_outdir = std::env::current_dir().unwrap().join("recordings");
 
