@@ -15,11 +15,10 @@ const SHORT_OUT_DIR: &str = "o";
 const RECORD_FILE: &str = "record_file";
 const SHORT_RECORD_FILE: &str = "f";
 
+const LOOP_COMMAND:&str = "loop";
+const SHORT_LOOP_COMMAND:&str = "l";
+
 fn main() {
-    let now = Local::now();
-
-    print!("{:?}", now);
-
     let default_outdir = std::env::current_dir().unwrap().join("recordings");
 
     std::fs::create_dir_all(&default_outdir).unwrap();
@@ -53,6 +52,12 @@ fn main() {
                 .required_ifs(&[(SHORT_STATUS, "p"), (STATUS, "play")])
                 .takes_value(true),
         )
+        .arg(
+            Arg::with_name(LOOP_COMMAND)
+            .short(SHORT_LOOP_COMMAND)
+            .help("Flag : Run this play in loop mode")
+            .multiple(false)
+        )
         .get_matches();
 
     initialize_engine(&matches);
@@ -63,6 +68,7 @@ fn main() {
 fn initialize_engine(matches: &clap::ArgMatches) {
     let status = matches.value_of(STATUS).expect("No Status Value");
     let outdir = matches.value_of(OUT_DIR).unwrap();
+    let is_loop = matches.occurrences_of(LOOP_COMMAND) > 0;
 
     let outdir_path = Path::new(outdir);
 
@@ -71,7 +77,7 @@ fn initialize_engine(matches: &clap::ArgMatches) {
 
         let file_path = Path::new(file_path);
 
-        play::action(file_path);
+        play::action(file_path,is_loop);
     }
 
     if status == "record" || status == "r" {
