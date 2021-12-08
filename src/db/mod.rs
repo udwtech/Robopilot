@@ -25,8 +25,6 @@ pub struct Recording {
 }
 
 impl RecordDb {
-
-    
     pub fn load_db(file_path: &Path) -> RecordDb {
         let mut option = fs::OpenOptions::new();
 
@@ -45,7 +43,7 @@ impl RecordDb {
             Content of the file is not as expected",
         );
 
-        return db
+        db
     }
 
     pub fn add(&mut self, record: Recording) {

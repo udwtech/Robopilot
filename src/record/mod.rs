@@ -1,12 +1,11 @@
 mod keyboard;
 mod mouse;
 
-
+use crate::db::Recording;
 use device_query::{DeviceQuery, DeviceState, Keycode};
 use keyboard::KeyboardRecord;
 use mouse::MouseRecord;
 use std::path::Path;
-use crate::db::Recording;
 
 use crate::db::RecordDb;
 
@@ -43,23 +42,19 @@ pub fn action(outdir: &Path) {
         {
             let data = KeyboardRecord::new(&device_state);
 
-            match data {
-                Some(data) => {
-                    let keypress:Vec<String> = data.key_pressed
-                    .iter()
-                    .map(|x| x.to_string()).collect();
+            if let Some(data) = data {
+                let keypress: Vec<String> =
+                    data.key_pressed.iter().map(|x| x.to_string()).collect();
 
-                    let data_record = Recording {
-                        device: data.device,
-                        x: None,
-                        y: None,
-                        button_pressed: None,
-                        key_pressed: Some(keypress),
-                    };
+                let data_record = Recording {
+                    device: data.device,
+                    x: None,
+                    y: None,
+                    button_pressed: None,
+                    key_pressed: Some(keypress),
+                };
 
-                    db.add(data_record);
-                }
-                None => {}
+                db.add(data_record);
             }
 
             continue;

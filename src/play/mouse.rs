@@ -23,7 +23,7 @@ fn move_cursor_only(x: i32, y: i32) {
     enigo.mouse_move_to(x, y);
 }
 
-fn move_and_press(x: i32, y: i32, button_press: &Vec<bool>) {
+fn move_and_press(x: i32, y: i32, button_press: &[bool]) {
     let mut enigo = Enigo::new();
 
     let mouse_click = match button_press.get(1).unwrap().eq(&true) {

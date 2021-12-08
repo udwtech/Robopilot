@@ -1,10 +1,10 @@
 mod keyboard;
 mod mouse;
 
-use std::path::Path;
 use crate::db::RecordDb;
+use std::path::Path;
 
-pub fn action(record_file: &Path, is_loop:bool) {
+pub fn action(record_file: &Path, is_loop: bool) {
     let db = RecordDb::load_db(record_file);
 
     // Start Looping the below recording.
@@ -13,12 +13,10 @@ pub fn action(record_file: &Path, is_loop:bool) {
         loop {
             play(&db);
         }
-    }else{
+    } else {
         println!("Start single play");
         play(&db);
     }
-
-   
 }
 
 // Play the recording.
@@ -26,8 +24,8 @@ fn play(db: &RecordDb) {
     db.recordings.iter().for_each(|recording| {
         let device = &recording.device;
         match device as &str {
-            "mouse" => mouse::play(&recording),
-            "keyboard" => keyboard::play(&recording),
+            "mouse" => mouse::play(recording),
+            "keyboard" => keyboard::play(recording),
             _ => println!("Unkown device recording was found {}", device),
         }
     })
