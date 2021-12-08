@@ -18,6 +18,7 @@ Just press `ctrl + r + k`, recording will be started as soon as the next key is 
 
 # Play back
 This require the variable --status=play and --output={filepath of the recorded file.}
+to enable looping add the -l flag 
 
 Please join and contribute.
 
