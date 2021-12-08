@@ -34,12 +34,3 @@ fn move_and_press(x: i32, y: i32, button_press: &[bool]) {
     move_cursor_only(x, y);
     enigo.mouse_click(mouse_click);
 }
-
-#[cfg(test)]
-mod mouse_test {
-
-    #[test]
-    fn test1() {
-        assert_eq!(1, 1);
-    }
-}
