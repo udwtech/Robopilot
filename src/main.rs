@@ -5,8 +5,8 @@ use clap::{App, Arg};
 use std::path::Path;
 
 /// CONSTANTS
-const STATUS: &str = "status";
-const SHORT_STATUS: &str = "s";
+const MODE: &str = "mode";
+const SHORT_MODE: &str = "m";
 
 const OUT_DIR: &str = "outdir";
 const SHORT_OUT_DIR: &str = "o";
@@ -23,17 +23,17 @@ fn main() {
     std::fs::create_dir_all(&default_outdir).unwrap();
 
     let matches = App::new("Mouse and Keyboard Actions")
-        .version("0.1.0")
-        .author("darwin subramaniam")
+        .version(env!("CARGO_PKG_VERSION"))
+        .author("Darwin Subramaniam, darwinsubramaniam@gmail.com")
         .about("Records and replay mouse and keyboard actions")
         .arg(
-            Arg::with_name(STATUS)
-                .short(SHORT_STATUS)
+            Arg::with_name(MODE)
+                .short(SHORT_MODE)
                 .default_value("record")
-                .value_name("status")
+                .value_name("mode")
                 .display_order(0)
                 .possible_values(&["record", "r", "play", "p"])
-                .help("Define Record or Play")
+                .help("Select Record or Play mode.")
                 .takes_value(true)
                 .required(true),
         )
@@ -47,14 +47,14 @@ fn main() {
         .arg(
             Arg::with_name(RECORD_FILE)
                 .short(SHORT_RECORD_FILE)
-                .help("Define the record file")
-                .required_ifs(&[(SHORT_STATUS, "p"), (STATUS, "play")])
+                .help("Path for the recording file.")
+                .required_ifs(&[(SHORT_MODE, "p"), (MODE, "play")])
                 .takes_value(true),
         )
         .arg(
             Arg::with_name(LOOP_COMMAND)
                 .short(SHORT_LOOP_COMMAND)
-                .help("Flag : Run this play in loop mode")
+                .help("Run this play in loop mode")
                 .multiple(false),
         )
         .get_matches();
@@ -65,13 +65,13 @@ fn main() {
 }
 
 fn initialize_engine(matches: &clap::ArgMatches) {
-    let status = matches.value_of(STATUS).expect("No Status Value");
+    let mode = matches.value_of(MODE).expect("No Status Value");
     let outdir = matches.value_of(OUT_DIR).unwrap();
     let is_loop = matches.occurrences_of(LOOP_COMMAND) > 0;
 
     let outdir_path = Path::new(outdir);
 
-    if status == "play" || status == "p" {
+    if mode == "play" || mode == "p" {
         let file_path = matches.value_of(RECORD_FILE).expect("Wrong file path");
 
         let file_path = Path::new(file_path);
@@ -79,7 +79,7 @@ fn initialize_engine(matches: &clap::ArgMatches) {
         play::action(file_path, is_loop);
     }
 
-    if status == "record" || status == "r" {
+    if mode == "record" || mode == "r" {
         println!("Start Recording");
         record::action(outdir_path);
     }

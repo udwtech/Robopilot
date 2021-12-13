@@ -17,8 +17,8 @@ Step 2 ->  then bring the cursor to the location , press `k`  and click the mous
 Just press `ctrl + r + k`, recording will be started as soon as the next key is pressed.
 
 # Play back
-This require the variable --status=play and --output={filepath of the recorded file.}
-to enable looping add the -l flag 
+This require the variable `--mode=play` and `--output={filepath of the recorded file.}`
+to enable looping add the `-l` flag 
 
 Please join and contribute.
 
