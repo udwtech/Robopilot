@@ -14,13 +14,10 @@ pub fn play(recording: &Recording) {
     let mut enigo = Enigo::new();
 
     key_pressed.iter().for_each(|key| {
-        let key: Option<Key> = string_to_key(&key);
+        let key: Option<Key> = string_to_key(key);
 
-        match key {
-            Some(key) => {
-                enigo.key_click(key);
-            }
-            None => {}
+        if let Some(key) = key {
+            enigo.key_click(key);
         }
     })
 }

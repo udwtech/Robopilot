@@ -25,8 +25,6 @@ pub struct Recording {
 }
 
 impl RecordDb {
-
-    
     pub fn load_db(file_path: &Path) -> RecordDb {
         let mut option = fs::OpenOptions::new();
 
@@ -45,7 +43,7 @@ impl RecordDb {
             Content of the file is not as expected",
         );
 
-        return db
+        db
     }
 
     pub fn add(&mut self, record: Recording) {
@@ -60,8 +58,6 @@ impl RecordDb {
 
         fs::write(file_copy, content).expect("Fail to save recording");
     }
-
-    pub fn delete(&self, record: Recording) {}
 
     pub fn new(outdir: &Path, filename: Option<&str>) -> Result<RecordDb, Error> {
         let current_file_count = count_total_recordings(outdir)?;

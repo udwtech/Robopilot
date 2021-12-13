@@ -1,7 +1,6 @@
 mod db;
 mod play;
 mod record;
-use chrono::Local;
 use clap::{App, Arg};
 use std::path::Path;
 
@@ -15,8 +14,8 @@ const SHORT_OUT_DIR: &str = "o";
 const RECORD_FILE: &str = "record_file";
 const SHORT_RECORD_FILE: &str = "f";
 
-const LOOP_COMMAND:&str = "loop";
-const SHORT_LOOP_COMMAND:&str = "l";
+const LOOP_COMMAND: &str = "loop";
+const SHORT_LOOP_COMMAND: &str = "l";
 
 fn main() {
     let default_outdir = std::env::current_dir().unwrap().join("recordings");
@@ -54,9 +53,9 @@ fn main() {
         )
         .arg(
             Arg::with_name(LOOP_COMMAND)
-            .short(SHORT_LOOP_COMMAND)
-            .help("Flag : Run this play in loop mode")
-            .multiple(false)
+                .short(SHORT_LOOP_COMMAND)
+                .help("Flag : Run this play in loop mode")
+                .multiple(false),
         )
         .get_matches();
 
@@ -77,7 +76,7 @@ fn initialize_engine(matches: &clap::ArgMatches) {
 
         let file_path = Path::new(file_path);
 
-        play::action(file_path,is_loop);
+        play::action(file_path, is_loop);
     }
 
     if status == "record" || status == "r" {
