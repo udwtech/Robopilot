@@ -10,6 +10,7 @@ use std::{
 #[derive(Debug, Deserialize, Serialize)]
 pub struct RecordDb {
     pub created_at: i64,
+    pub version:Option<i32>,
     pub recordings: Vec<Recording>,
     #[serde(skip, default)]
     file: PathBuf,
@@ -25,6 +26,9 @@ pub struct Recording {
 }
 
 impl RecordDb {
+    /// Define the Version of the Database 
+    const VERSION_DB:i32=1;
+
     pub fn load_db(file_path: &Path) -> RecordDb {
         let mut option = fs::OpenOptions::new();
 
@@ -80,9 +84,10 @@ impl RecordDb {
                 println!("Successfully Created at {:?}", created_file.metadata());
 
                 Ok(RecordDb {
-                    file: file_path,
                     created_at: Local::now().timestamp(),
+                    version: Some(RecordDb::VERSION_DB),
                     recordings: Vec::new(),
+                    file: file_path,
                 })
             }
         }
