@@ -12,10 +12,12 @@ pub struct KeyboardRecord {
 impl KeyboardRecord {
     pub fn new(device_state: &DeviceState) -> Option<KeyboardRecord> {
         let mut all_inputs: Vec<Keycode> = Vec::new();
-        std::thread::sleep(std::time::Duration::from_millis(500));
+        let sleep_duration = std::time::Duration::from_millis(100);
+        let initial_sleep_duration = std::time::Duration::from_millis(500);
+        std::thread::sleep(initial_sleep_duration);
 
         loop {
-            std::thread::sleep(std::time::Duration::from_millis(100));
+            std::thread::sleep(sleep_duration);
             let mut keyboard = device_state.get_keys();
 
             if keyboard.contains(&Keycode::F12) {
@@ -39,3 +41,4 @@ impl KeyboardRecord {
         }
     }
 }
+
